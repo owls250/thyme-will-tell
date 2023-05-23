@@ -10,3 +10,8 @@ cooking software
 
 ## aesthetics
 - simple
+
+
+## ideas
+- identify ingredients in recipe from ingredients list
+- some kind of structure to hold them

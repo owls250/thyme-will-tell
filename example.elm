@@ -2,6 +2,10 @@ import Browser
 import Html exposing (Html, Attribute, div, input, text)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
+import Html exposing (..)
+import Html.Attributes exposing (..)
+
+-- example based on https://guide.elm-lang.org/architecture/text_fields.html
 
 
 -- MAIN
@@ -42,8 +46,11 @@ update msg model =
 
 
 view : Model -> Html Msg
-view model = 
+view model =
     div []
-        [ input [ placeholder "Recipe", value model.recipe, onInput Change][]
+        [ h1 [] [ text "Welcome to our recipe assistant!"]
+        , p []
+            [ text "hi!" ] 
+        , input [ placeholder "Recipe", value model.recipe, onInput Change][]
         , div [] [ text (String.reverse model.recipe)] -- do something here
         ] 
