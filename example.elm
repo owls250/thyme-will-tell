@@ -19,12 +19,16 @@ main =
 
 type alias Model = 
     { recipe : String
+    , ingredients : Array
+    , instructions : String
     }
 
 
 init : Model
 init = 
-    { recipe = "" }
+    { recipe = "" 
+    , ingredients = []
+    , instructions = "" }
 
 
 
@@ -39,6 +43,13 @@ update msg model =
     case msg of 
         Change newRecipe ->
             { model | recipe = newRecipe }
+        Portion size ->
+            { model | ingredients = times( size) }
+
+
+times : Int -> Model
+times msg model = 
+    
 
 
 
@@ -51,6 +62,12 @@ view model =
         [ h1 [] [ text "Welcome to our recipe assistant!"]
         , p []
             [ text "hi!" ] 
-        , input [ placeholder "Recipe", value model.recipe, onInput Change][]
+        , input [ placeholder "Ingredients", value model.ingredients, onInput Change][]
+        , input [ placeholder "Instructions", value model.instructions, onInput Change][]
+        , button [ onClick portions 1/3 ] [ text 1/3x ]
+        , button [ onClick portions 1/2 ] [ text 1/2x ]
+        , button [ onClick portions 2 ] [ text 2x ]
+        , button [ onClick portions 3 ] [ text 3x ]
+        , button [ onClick portions 4 ] [ text 4x ]
         , div [] [ text (String.reverse model.recipe)] -- do something here
         ] 
