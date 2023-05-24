@@ -4,6 +4,8 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html exposing (Html, button, div, text)
+import Html.Events exposing (onClick)
 
 -- example based on https://guide.elm-lang.org/architecture/text_fields.html
 
@@ -19,7 +21,9 @@ main =
 
 type alias Model = 
     { recipe : String
-    , ingredients : Array
+    --TODO: ingredients should be either record or tuple with strings and ints
+    -- I am just getting it to compile by setting it to float 
+    , ingredients : Float
     , instructions : String
     }
 
@@ -27,7 +31,7 @@ type alias Model =
 init : Model
 init = 
     { recipe = "" 
-    , ingredients = []
+    , ingredients = 0
     , instructions = "" }
 
 
@@ -36,6 +40,7 @@ init =
 
 type Msg
     = Change String
+    | Portion Float
 
 
 update : Msg -> Model -> Model
@@ -43,12 +48,14 @@ update msg model =
     case msg of 
         Change newRecipe ->
             { model | recipe = newRecipe }
-        Portion size ->
-            { model | ingredients = times( size) }
+        Portion size -> 
+        --As above this is just to get it to compile
+            { model | ingredients = size }
+            --{ model | ingredients = times( size) }
 
 
-times : Int -> Model
-times msg model = 
+--times : Int -> Model
+--times msg model = 
     
 
 
@@ -61,13 +68,13 @@ view model =
     div []
         [ h1 [] [ text "Welcome to our recipe assistant!"]
         , p []
-            [ text "hi!" ] 
-        , input [ placeholder "Ingredients", value model.ingredients, onInput Change][]
+            [ text "hi!" ]
+        , input [ placeholder "Ingredients", value (String.fromFloat model.ingredients), onInput Change][]
         , input [ placeholder "Instructions", value model.instructions, onInput Change][]
-        , button [ onClick portions 1/3 ] [ text 1/3x ]
-        , button [ onClick portions 1/2 ] [ text 1/2x ]
-        , button [ onClick portions 2 ] [ text 2x ]
-        , button [ onClick portions 3 ] [ text 3x ]
-        , button [ onClick portions 4 ] [ text 4x ]
-        , div [] [ text (String.reverse model.recipe)] -- do something here
+        , button [ onClick (Portion (1/3)) ] [ text "1/3x" ]
+        , button [ onClick (Portion (1/2)) ] [ text "1/2x" ]
+        , button [ onClick (Portion 2) ] [ text "2x" ]
+        , button [ onClick (Portion 3) ] [ text "3x" ]
+        , button [ onClick (Portion 4) ] [ text "4x" ]
+        , div [] [ text (model.recipe)] -- do something here
         ] 
