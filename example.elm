@@ -46,7 +46,7 @@ init =
 
 type Msg
     = Change String
-    --| Portion Float
+    | Portion Float
 
 
 update : Msg -> Model -> Model
@@ -56,12 +56,11 @@ update msg model =
             { model | instructions = newRecipe }
         Portion size -> 
         --As above this is just to get it to compile
-            { model | ingredients.quantity = times( size) }
+            { model | ingredients = times( size) }
 
 
 times : Int -> Model
-times msg model = 
-    
+times msg model = quantity.map( x => x * msg )
 
 
 
@@ -74,8 +73,8 @@ view model =
         [ h1 [] [ text "Welcome to our recipe assistant!"]
         , p []
             [ text "hi!" ]
-        --, input [ placeholder "Ingredients", value (String.fromFloat model.ingredients), onInput Change][]
-        --, input [ placeholder "Instructions", value model.instructions, onInput Change][]
+        --, input [ placeholder "Ingredients", value (String.fromFloat model.ingredients.), onInput Change][]
+        , input [ placeholder "Instructions", value model.instructions, onInput Change][]
         --, button [ onClick (Portion (1/3)) ] [ text "1/3x" ]
         --, button [ onClick (Portion (1/2)) ] [ text "1/2x" ]
         --, button [ onClick (Portion 2) ] [ text "2x" ]
